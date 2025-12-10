@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 //import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
 import './App.css'
@@ -8,8 +8,8 @@ function App() {
 const[currStr, setCurrStr] = useState<string>('');
 const[currPlace, setCurrPlace] = useState<string>('');
 const autoComplete = useAutoComplete(currStr);
-const city = useSearch(currPlace);
-const coords = useWeatherLoc(city? city.long : 0, city? city.lat : 0);
+const coords = useSearch(currPlace);
+const weather = useWeatherLoc(coords? coords.lon : 0, coords? coords.lat : 0);
     return (
         <>
             <label>
@@ -20,16 +20,19 @@ const coords = useWeatherLoc(city? city.long : 0, city? city.lat : 0);
                 <div key={index}>
                     <ul>
                         <button onClick={() => {
-                            setCurrPlace(auto.city);
-                            setCurrStr(auto.city);
-                        }}>{auto.city}</button>
+                            setCurrPlace(auto.formatted);
+                            setCurrStr(auto.formatted);
+                        }}>{auto.formatted}</button>
                     </ul>
                 </div>)}
             </div>
-            <button id='buttonOne' onClick={() => {
-
-            }}>Search
+            <button id='buttonOne' onClick={() => setCurrPlace(currStr)}>Search
             </button>
+
+            {coords? coords.lon : 0}, {coords? coords.lat : 0}
+
+
+
         </>
     )
 }
