@@ -3,6 +3,7 @@ import { useState } from 'react'
 //import viteLogo from '/vite.svg'
 import './App.css'
 import {useAutoComplete, useSearch, useWeatherLoc} from "./Hooks.ts";
+import {Weather} from './Weather.tsx'
 
 function App() {
 const[currStr, setCurrStr] = useState<string>('');
@@ -31,7 +32,7 @@ const weather = useWeatherLoc(coords? coords.lon : 0, coords? coords.lat : 0);
 
             {coords? coords.lon : 0}, {coords? coords.lat : 0}
 
-
+            {weather && <Weather weather = {weather} />}
 
         </>
     )
