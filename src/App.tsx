@@ -4,6 +4,7 @@ import { useState } from 'react'
 import './App.css'
 import {useAutoComplete, useSearch, useWeatherLoc} from "./Hooks.ts";
 import {Weather} from './Weather.tsx'
+import Input from "./premade.tsx";
 
 function App() {
 const[currStr, setCurrStr] = useState<string>('');
@@ -15,6 +16,7 @@ const weather = useWeatherLoc(coords? coords.lon : 0, coords? coords.lat : 0);
         <>
             <label>
                 <input value={currStr} onChange={e => setCurrStr(e.target.value)} />
+            <Input></Input>
             </label>
             <div>
                 {autoComplete.map((auto, index) =>
