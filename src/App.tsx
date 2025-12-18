@@ -5,6 +5,7 @@ import './App.css'
 import {useAutoComplete, useSearch, useWeatherLoc} from "./Hooks.ts";
 import {Weather} from './Weather.tsx'
 import Input from "./premade.tsx";
+import Card from "./weatherCard.tsx"
 
 function App() {
 const[currStr, setCurrStr] = useState<string>('');
@@ -12,15 +13,20 @@ const[currPlace, setCurrPlace] = useState<string>('');
 const autoComplete = useAutoComplete(currStr);
 const coords = useSearch(currPlace);
 const weather = useWeatherLoc(coords? coords.lon : 0, coords? coords.lat : 0);
+
+const handleSearch = () => {
+    if(!currStr.trim()) return;
+    setCurrPlace(currStr);
+}
     return (
         <>
             <label>
-                <input value={currStr} onChange={e => setCurrStr(e.target.value)} />
-            <Input></Input>
+                <Input value={currStr} onChange={e => setCurrStr(e.target.value)} onSearch={handleSearch}/>
+
             </label>
             <div>
                 {autoComplete.map((auto, index) =>
-                <div key={index}>
+                    <div key={index}>
                     <ul>
                         <button onClick={() => {
                             setCurrPlace(auto.formatted);
@@ -29,12 +35,13 @@ const weather = useWeatherLoc(coords? coords.lon : 0, coords? coords.lat : 0);
                     </ul>
                 </div>)}
             </div>
-            <button id='buttonOne' onClick={() => setCurrPlace(currStr)}>Search
-            </button>
+            {/*<button id='buttonOne' onClick={() => setCurrPlace(currStr)}>Search*/}
+            {/*</button>*/}
 
             {coords? coords.lon : 0}, {coords? coords.lat : 0}
 
             {weather && <Weather weather = {weather} />}
+            <Card></Card>
 
         </>
     )
